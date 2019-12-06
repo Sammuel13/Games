@@ -1,0 +1,160 @@
+onde = 0
+tabuleiro = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
+
+print(f'\n┌─────┬─────┬─────┐\n│  1  │  2  │  3  │\n├─────┼─────┼─────┤\n│  4  │  5  │  6  │\n├─────┼─────┼─────┤\n│  7  │  8  │  9  │\n└─────┴─────┴─────┘')
+
+alguem_ganhou = False
+i = 0
+while i != 9:
+  i +=1
+  onde = int(input('\nJogador "✕"\nEscolha o local da peça\n\n✪ '))
+
+  if onde == 1 and tabuleiro[0][0] == ' ':
+    tabuleiro[0][0] = '✕'
+
+  if onde == 2 and tabuleiro[1][0] == ' ':
+    tabuleiro[1][0] = '✕'
+
+  if onde == 3 and tabuleiro[2][0] == ' ':
+    tabuleiro[2][0] = '✕'
+
+  if onde == 4 and tabuleiro[0][1] == ' ':
+    tabuleiro[0][1] = '✕'
+
+  if onde == 5 and tabuleiro[1][1] == ' ':
+    tabuleiro[1][1] = '✕'
+
+  if onde == 6 and tabuleiro[2][1] == ' ':
+    tabuleiro[2][1] = '✕'
+
+  if onde == 7 and tabuleiro[0][2] == ' ':
+    tabuleiro[0][2] = '✕'
+
+  if onde == 8 and tabuleiro[1][2] == ' ':
+    tabuleiro[1][2] = '✕'
+
+  if onde == 9 and tabuleiro[2][2] == ' ':
+    tabuleiro[2][2] = '✕'
+
+  if tabuleiro[0][0] == '✕' and tabuleiro[0][1] == '✕' and tabuleiro[0][2] == '✕':
+    print('\nJogador "X" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[1][0] == '✕' and tabuleiro[1][1] == '✕' and tabuleiro[1][2] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[2][0] == '✕' and tabuleiro[2][1] == '✕' and tabuleiro[2][2] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][0] == '✕' and tabuleiro[1][0] == '✕' and tabuleiro[2][0] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][1] == '✕' and tabuleiro[1][1] == '✕' and tabuleiro[2][1] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][2] == '✕' and tabuleiro[1][2] == '✕' and tabuleiro[2][2] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][0] == '✕' and tabuleiro[1][1] == '✕' and tabuleiro[2][2] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][2] == '✕' and tabuleiro[1][1] == '✕' and tabuleiro[2][0] == '✕':
+    print('\nJogador "✕" venceu!')
+    alguem_ganhou = True
+    break
+
+  print(f'\n┌─────┬─────┬─────┐\n│  {tabuleiro[0][0]}  │  {tabuleiro[1][0]}  │  {tabuleiro[2][0]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][1]}  │  {tabuleiro[1][1]}  │  {tabuleiro[2][1]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][2]}  │  {tabuleiro[1][2]}  │  {tabuleiro[2][2]}  │\n└─────┴─────┴─────┘')
+  i += 1
+
+  if i >= 9 and alguem_ganhou == False:
+    print('\nDeu velha ksksk')
+    print('\n _______Fim de jogo_______')
+
+
+  onde = int(input('\nJogador "▢"\nEscolha o local da peça\n\n✪ '))
+
+  if onde == 1 and tabuleiro[0][0] == ' ':
+    tabuleiro[0][0] = '▢'
+
+  if onde == 2 and tabuleiro[1][0] == ' ':
+    tabuleiro[1][0] = '▢'
+
+  if onde == 3 and tabuleiro[2][0] == ' ':
+    tabuleiro[2][0] = '▢'
+
+  if onde == 4 and tabuleiro[0][1] == ' ':
+    tabuleiro[0][1] = '▢'
+
+  if onde == 5 and tabuleiro[1][1] == ' ':
+    tabuleiro[1][1] = '▢'
+
+  if onde == 6 and tabuleiro[2][1] == ' ':
+    tabuleiro[2][1] = '▢'
+
+  if onde == 7 and tabuleiro[0][2] == ' ':
+    tabuleiro[0][2] = '▢'
+
+  if onde == 8 and tabuleiro[1][2] == ' ':
+    tabuleiro[1][2] = '▢'
+
+  if onde == 9 and tabuleiro[2][2] == ' ':
+    tabuleiro[2][2] = '▢'
+
+  if tabuleiro[0][0] == '▢' and tabuleiro[0][1] == '▢' and tabuleiro[0][2] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[1][0] == '▢' and tabuleiro[1][1] == '▢' and tabuleiro[1][2] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[2][0] == '▢' and tabuleiro[2][1] == '▢' and tabuleiro[2][2] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][0] == '▢' and tabuleiro[1][0] == '▢' and tabuleiro[2][0] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][1] == '▢' and tabuleiro[1][1] == '▢' and tabuleiro[2][1] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][2] == '▢' and tabuleiro[1][2] == '▢' and tabuleiro[2][2] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][0] == '▢' and tabuleiro[1][1] == '▢' and tabuleiro[2][2] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  if tabuleiro[0][2] == '▢' and tabuleiro[1][1] == '▢' and tabuleiro[2][0] == '▢':
+    print('\nJogador "▢" venceu!')
+    alguem_ganhou = True
+    break
+
+  print(f'\n┌─────┬─────┬─────┐\n│  {tabuleiro[0][0]}  │  {tabuleiro[1][0]}  │  {tabuleiro[2][0]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][1]}  │  {tabuleiro[1][1]}  │  {tabuleiro[2][1]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][2]}  │  {tabuleiro[1][2]}  │  {tabuleiro[2][2]}  │\n└─────┴─────┴─────┘')
+
+print(f'\n┌─────┬─────┬─────┐\n│  {tabuleiro[0][0]}  │  {tabuleiro[1][0]}  │  {tabuleiro[2][0]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][1]}  │  {tabuleiro[1][1]}  │  {tabuleiro[2][1]}  │\n├─────┼─────┼─────┤\n│  {tabuleiro[0][2]}  │  {tabuleiro[1][2]}  │  {tabuleiro[2][2]}  │\n└─────┴─────┴─────┘')
+
+if alguem_ganhou == True: print('\n _______Fim de jogo_______')
