@@ -1,0 +1,240 @@
+import pygame
+import random
+
+
+# Macros
+BLOCK = 10
+
+X = 0
+Y = 1
+STARTY = 50
+
+
+UP = 0
+RIGHT = 1
+DOWN = 2
+LEFT = 3
+
+GFPS = 10
+FPS = 60
+
+
+def menu():
+    fonte = pygame.font.SysFont('Open sans', 32)
+    texto1 = fonte.render('1 - Jogar', True, grey)
+    texto2 = fonte.render('2 - Ranking', True, grey)
+    texto3 = fonte.render('0 - Sair', True, grey)
+
+    caixa_texto1 = texto1.get_rect()
+    caixa_texto1.midtop = (180, 170)
+    caixa_texto2 = texto1.get_rect()
+    caixa_texto2.midtop = (180, 204)
+    caixa_texto3 = texto1.get_rect()
+    caixa_texto3.midtop = (180, 238)
+
+    display.fill(white)
+
+    display.blit(texto1, caixa_texto1)
+    display.blit(texto2, caixa_texto2)
+    display.blit(texto3, caixa_texto3)
+
+    pygame.display.flip()
+    
+    while True:
+        for evento in pygame.event.get():
+            if (evento.type == pygame.QUIT):
+                quit()
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_1:
+                    return 1
+                elif evento.key == pygame.K_2:
+                    return 2
+                elif evento.key == pygame.K_0:
+                    return 0
+
+        fps_clock.tick(FPS)
+
+def game():
+    cobra = [[100, 50], [90, 50]]
+    maca = nova_maca()
+    pontuacao = 0
+    velocidade = [BLOCK, 0]
+
+    direcao = RIGHT
+
+    while True:
+        if (cobra[0][X] < 0 or cobra[0][X] >= 400) or (cobra[0][Y] < 50 or cobra[0][Y] >= 420) or (cobra[0] in cobra[1:-1]):
+            # game_over()
+            return pontuacao
+        
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                quit()
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_RIGHT and direcao != LEFT:
+                    direcao = RIGHT
+                elif evento.key == pygame.K_LEFT and direcao != RIGHT:
+                    direcao = LEFT
+                elif evento.key == pygame.K_UP and direcao != DOWN:
+                    direcao = UP
+                elif evento.key == pygame.K_DOWN and direcao != UP:
+                    direcao = DOWN
+
+        # Movimento
+        if direcao == RIGHT:
+            velocidade[X] = BLOCK
+            velocidade[Y] = 0
+        if direcao == LEFT:
+            velocidade[X] = -BLOCK
+            velocidade[Y] = 0
+        if direcao == UP:
+            velocidade[X] = 0
+            velocidade[Y] = -BLOCK
+        if direcao == DOWN:
+            velocidade[X] = 0
+            velocidade[Y] = BLOCK
+
+        # Crescimento
+        cobra.insert(0, list((cobra[0][X] + velocidade[X], cobra[0][Y] + velocidade[Y])))
+        if cobra[0] == maca:
+            maca = nova_maca()
+            pontuacao += 1
+            #feed_sfx.play(1)
+        else:
+            cobra.pop()
+        
+        # Limpa a tela
+        display.fill(white)
+        
+        # Placar
+        desenhar_placar(pontuacao)
+
+        # Cobra
+        for posicao in cobra:
+            retangulo_cobra = pygame.Rect(posicao[X], posicao[Y], BLOCK, BLOCK)
+
+
+            pygame.draw.rect(display, green, retangulo_cobra)          
+
+        #Maca
+        retangulo_maca = pygame.Rect(maca[X], maca[Y], BLOCK, BLOCK)
+        pygame.draw.rect(display, brown, retangulo_maca)
+
+        pygame.display.flip()
+        fps_clock.tick(GFPS)
+
+def exibir_ranking():
+    ranking = []
+    caixas = []
+
+    display.fill(grey)
+
+    fonte = pygame.font.SysFont('Open sans', 32)
+
+    arquivo = open('ranking.txt', 'r')
+    
+    i = 100
+    for linha in arquivo:
+        texto = fonte.render(linha.strip('\n'), True, green)
+        caixa_texto = texto.get_rect()
+
+        caixa_texto.midtop = (200, i)
+        display.blit(texto, caixa_texto)
+
+        i+= 40
+
+        pygame.display.flip()
+
+    arquivo.close()
+
+    texto = fonte.render('1  - Voltar', True, white)
+    caixa_texto = texto.get_rect()
+
+    caixa_texto.midtop = (200, i)
+    display.blit(texto, caixa_texto)
+    
+    pygame.display.flip()
+    while True:
+        for evento in pygame.event.get():
+            if (evento.type == pygame.QUIT):
+                quit()
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_1:
+                    return
+
+        fps_clock.tick(FPS)
+
+def gravar_ranking(nome, pontuacao):
+    ranking = []
+    nomes = []
+
+    arquivo = open('ranking.txt', 'r')
+
+    done = False
+    for i in range(5):
+        linha = arquivo.readline()
+        nome_r, pontuacao_r = linha.split()
+
+        if int(pontuacao_r) < pontuacao and not done:
+            ranking.append(pontuacao)
+            nomes.append(nome)
+            ranking.append(pontuacao_r)
+            nomes.append(nome_r)
+            done = True
+        else:
+            ranking.append(pontuacao_r)
+            nomes.append(nome_r)
+    
+    arquivo.close()
+
+    for i in range(5):
+        ranking[i] = f'{nomes[i]} {ranking[i]}\n'
+
+    arquivo = open('ranking.txt', 'w')
+    for i in range(5):
+        arquivo.write(ranking[i])
+
+def nova_maca():
+    return [random.randrange(1,40)*BLOCK, random.randrange(5,42)*BLOCK]
+
+def game_over(pontuacao):
+    pass
+
+def desenhar_placar(pontuacao):
+    retangulo = pygame.Rect(0, 0, 400, 50)
+    pygame.draw.rect(display, grey, retangulo)
+
+    fonte = pygame.font.SysFont('Open sans', 32)
+    texto = fonte.render(f'Pontuação: {pontuacao}', True, white)
+
+    caixa_texto = texto.get_rect()
+    caixa_texto.midtop = (200, 15)
+
+    display.blit(texto, caixa_texto)
+
+
+# Color variables:
+green = pygame.Color(0, 255, 0)     # Cor da cobra
+white = pygame.Color(255, 255, 255) # Cor de fundo
+brown = pygame.Color(255, 00, 00)   # Cor da maçã
+grey = pygame.Color(50, 50, 50)     # Cor do placar
+
+# Display
+display = pygame.display.set_mode((400, 420))
+pygame.display.set_caption('Paçoca_game')
+
+# Clock
+fps_clock = pygame.time.Clock()
+
+#Som
+#pygame.mixer.init()
+#feed_sfx = pygame.mixer.Sound('effect.mp3')
+
+errors = pygame.init()
+if errors[1]:
+    print(errors[0]+' erros')
+else:
+    print('Sem erros')
+
+while True:
+    game()
